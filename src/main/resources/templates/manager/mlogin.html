@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>管理员登录</title>
+    <link href="login.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="login_box">
+    <div class="login_l_img"><img src="images/login-img.png" /></div>
+    <div class="login">
+        <div class="login_logo"><a href="#"><img src="images/login_logo.png" /></a></div>
+        <div class="login_name">
+            <p>FAKE MANAGER</p>
+        </div>
+        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+        <form method="post" action="/managerLogin">
+            <input name="id" type="text"  value="用户名" maxlength="32" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
+            <span id="password_text" onclick="this.style.display='none';document.getElementById('password').style.display='block';document.getElementById('password').focus().select();" >密码</span>
+            <input name="password" type="password" id="password" style="display:none;" maxlength="10" onblur="if(this.value==''){document.getElementById('password_text').style.display='block';this.style.display='none'};"/>
+            <input value="登录" style="width:100%;" type="submit">
+        </form>
+
+</body>
+</html>

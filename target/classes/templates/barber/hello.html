@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<head th:replace="~{fragments/header :: header}">
+</head>
+
+<body>
+
+<link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand button" onclick="replaceDoc()">Barber</a>
+        </div>
+
+        <div class="navbar-header">
+            <a class="navbar-brand button" href="/barberLogout">注销</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar" role="tablist">
+                <li role="presentation" class="active" >
+                    <a href="#porder" aria-controls="home" role="tab" data-toggle="tab">待处理订单</a>
+                </li>
+                <li role="presentation">
+                    <a href="#aorder" aria-controls="home" role="tab" data-toggle="tab">已接受订单</a>
+                </li>
+                <li role="presentation">
+                    <a href="#corder" aria-controls="home" role="tab" data-toggle="tab">已拒绝订单</a>
+                </li>
+                <li >
+                    <a href="/barberAbility" >个人能力</a>
+                </li>
+                <li role="presentation">
+                    <a aria-controls="home" role="tab" data-toggle="tab">修改手机号</a>
+                </li>
+                <li role="presentation">
+                    <a aria-controls="home" role="tab" data-toggle="tab">修改邮箱</a>
+                </li>
+                <li role="presentation">
+                    <a aria-controls="home" role="tab" data-toggle="tab">修改密码</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" >
+            <div class="tab-content">
+                <!--待处理-->
+                <div role="tabpanel" class="tab-pane fade in active" id="porder" >
+                    <h1 class="page-header ">待处理订单</h1>
+                    <table th:replace="~{barber/pending_order :: table}">
+                    </table>
+                </div>
+
+                <!--已接受订单-->
+                <div role="tabpanel" class="tab-pane fade" id="aorder" >
+                    <h1 class="page-header ">已接受订单</h1>
+                    <table th:replace="~{barber/accepted_order :: table}">
+                    </table>
+                </div>
+
+                <!--已完成订单-->
+                <div role="tabpanel" class="tab-pane fade" id="corder" >
+                    <h1 class="page-header ">已拒绝订单</h1>
+                    <table th:replace="~{barber/completed_order :: table}">
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">...</div>
+
+</body>
+</html>

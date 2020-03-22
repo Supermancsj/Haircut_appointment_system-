@@ -1,0 +1,42 @@
+<table id="barberlist" th:fragment="barberlist" class="table table-striped table-hover table-bordered" xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+    <script>
+        function deleteBarber(url) {
+            url="/deleteBarber/id="+url;
+            $('#barberlist').load(url);
+        }
+    </script>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="text-center">
+            员工号
+        </td>
+        <td class="text-center">
+            电话
+        </td>
+        <td class="text-center">
+            邮箱
+        </td>
+        <td class="text-center">
+            密码
+        </td>
+        <td class="text-center">
+            店铺号
+        </td>
+        <td class="text-center">
+            操作
+        </td>
+    </tr>
+    <tr th:each="barber:${barbers}">
+        <td th:text="${barber.id}" class="text-center"></td>
+        <td th:text="${barber.telephone}" class="text-center"></td>
+        <td th:text="${barber.email}" class="text-center"></td>
+        <td th:text="${barber.password}" class="text-center"></td>
+        <td th:text="${barber.shopid}" class="text-center"></td>
+        <td class="text-center">
+            <a type="button" class="btn btn-danger" th:onclick="deleteBarber([[${barber.id}]])">删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

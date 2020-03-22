@@ -1,0 +1,38 @@
+<table class="table table-striped table-hover table-bordered" xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+
+    </thead>
+    <tbody>
+    <tr>
+        <td class="text-center">
+            订单
+        </td>
+        <td class="text-center">
+            时间
+        </td>
+        <td class="text-center">
+            发型
+        </td>
+        <td class="text-center">
+            用户
+        </td>
+        <td class="text-center">
+            状态
+        </td>
+        <td class="text-center">
+            操作
+        </td>
+    </tr>
+    <tr th:each="porder:${pOrders}">
+        <td th:text="${porder.id}" class="text-center"></td>
+        <td th:text="${porder.time}" class="text-center"></td>
+        <td th:text="${porder.name}" class="text-center"></td>
+        <td th:text="${porder.userid}" class="text-center"></td>
+        <td th:text="${porder.station}" class="text-center"></td>
+        <td class="text-center">
+            <a type="button" class="btn btn-primary" data-toggle="modal" th:href="'/barberAccept/orderid=' + ${porder.id}">接单</a>
+            <a type="button" class="btn btn-danger" th:href="'/barberRefuse/orderid=' + ${porder.id}">拒单</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

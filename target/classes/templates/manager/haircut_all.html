@@ -1,0 +1,111 @@
+<table id="fruitlist" th:fragment="fruitlist" class="table table-striped table-hover table-bordered" xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+    <script>
+        function submitForm(priceid){
+            var regexp=/^\+?\d+(\.\d+)?$/;
+            var price=document.getElementById("price"+priceid).value;
+
+            if(!regexp.test(price)){
+                document.getElementById("msg"+priceid).style.display="inline-block";
+                document.getElementById("msg"+priceid).style.color="red";
+                document.getElementById("msg"+priceid).innerHTML="价格必须是正整数";
+                document.getElementById("price"+priceid).focus();
+                document.getElementById("price"+priceid).select();
+            }
+            else{
+                document.getElementById("msg"+priceid).style.display="none";
+                document.getElementById("allow"+priceid).submit();
+            }
+        }
+
+        function deleteHairType(url) {
+            url="/deletehair/id="+url;
+            $('#fruitlist').load(url);
+        }
+    </script>
+    </thead>
+    <tbody >
+    <tr>
+        <td class="text-center">
+            发型号
+        </td>
+        <td class="text-center">
+            发型名字
+        </td>
+        <td class="text-center">
+            价格
+        </td>
+        <td class="text-center">
+            店铺号
+        </td>
+        <td class="text-center">
+            操作
+        </td>
+    </tr>
+    <tr th:each="haircut:${haircuts}">
+        <td th:text="${haircut.id}" class="text-center"></td>
+        <td th:text="${haircut.name}" class="text-center"></td>
+        <td th:text="${haircut.price}" class="text-center"></td>
+        <td th:text="${haircut.shopid}" class="text-center"></td>
+        <td class="text-center">
+            <a type="button" class="btn btn-primary" data-toggle="modal" th:data-target="'#'+${haircut.id}" >修改</a>
+            <!-- Modal -->
+            <div class="modal fade" th:id="${haircut.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">修改</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="form-horizontal" th:id="'allow'+${haircut.id}" action="#" th:action="@{/updatehair}" method="post" >
+                                <div class="form-group">
+                                    <label for="id" class="col-sm-2 control-label">编号</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="id" name="id" placeholder="编号"
+                                               th:value="${haircut.id}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">名字</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="名字"
+                                               th:value="${haircut.name}" maxlength="10">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label th:for="'price'+${haircut.id}" class="col-sm-2 control-label">价格</label>
+                                    <div class="col-sm-10" >
+                                        <input type="text" class="form-control" th:id="'price'+${haircut.id}" name="price" placeholder="价格" th:value="${haircut.price}" maxlength="10">
+                                    </div>
+                                </div>
+
+                                    <div class="form-group">
+                                        <label for="shopid" class="col-sm-2 control-label">店号</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="shopid" name="shopid" placeholder="店号"
+                                                   th:value="${haircut.shopid}" maxlength="10" readonly>
+                                        </div>
+                                    </div>
+
+                                <div th:id="'msg'+${haircut.id}"></div>
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="button" class="btn btn-default" id="change" th:onclick="submitForm([[${haircut.id}]])" th:value="'msg'+${haircut.id}">修改</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---th:href="'/deletehair/id=' +${haircut.id}-->
+            <a type="button" class="btn btn-danger" th:onclick="deleteHairType([[${haircut.id}]])" >删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

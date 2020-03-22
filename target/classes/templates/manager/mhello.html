@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header}">
+</head>
+
+<body>
+
+<link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand button" onclick="replaceDoc()">Manager</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/barberLogout">注销</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#mbarber" aria-controls="home" role="tab" data-toggle="tab">管理理发师</a>
+                </li>
+                <li role="presentation">
+                    <a href="#mhaircut" aria-controls="home" role="tab" data-toggle="tab">发型管理</a>
+                </li>
+                <li role="presentation">
+                    <a href="#qorder" aria-controls="home" role="tab" data-toggle="tab">查看所有订单</a>
+                </li>
+                <li role="presentation">
+                    <a href="#rorder" aria-controls="home" role="tab" data-toggle="tab">拒绝订单确认</a>
+                </li>
+                <li role="presentation">
+                    <a href="#vip" aria-controls="home" role="tab" data-toggle="tab">VIP</a>
+                </li>
+            </ul>
+        </div>
+
+        <!---新加理发师--->
+        <div class="modal fade" id="add_barber" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/addBarber" class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="input_telephone" placeholder="手机号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="input_email" placeholder="邮箱号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <input type="submit" class="btn btn-default" value="提交"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--add hair type-->
+        <div class="modal fade" id="add_hairtype" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="/addHairtype" class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="input_name" placeholder="发型">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="input_price" placeholder="价格">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <input type="submit" class="btn btn-default" value="提交"/>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="tab-content">
+
+                <!--管理理发师-->
+                <div role="tabpanel" class="tab-pane fade in active" id="mbarber" th:fragment="mbarber">
+                    <h1 class="page-header ">管理理发师</h1>
+
+                    <a data-toggle="modal" class="btn btn-primary" data-target="#add_barber">添加理发师</a>
+
+                    <table th:replace="~{manager/barber_all :: table}">
+                    </table>
+                </div>
+
+                <!--管理发型-->
+                <div role="tabpanel" class="tab-pane fade" id="mhaircut" th:fragment="mhaircut">
+                    <h1 class="page-header ">发型管理</h1>
+                    <a data-toggle="modal" class="btn btn-primary" data-target="#add_hairtype">添加发型</a>
+                    <table th:replace="~{manager/haircut_all :: table}">
+                    </table>
+                </div>
+
+                <!--查看订单信息-->
+                <div role="tabpanel" class="tab-pane fade" id="qorder">
+                    <h1 class="page-header ">查看所有订单</h1>
+                    <table th:replace="~{manager/order_query :: table}">
+                    </table>
+                </div>
+
+                <!--拒绝订单确认-->
+                <div role="tabpanel" class="tab-pane fade" id="rorder">
+                    <h1 class="page-header ">拒绝订单确认</h1>
+                    <table th:replace="~{manager/order_handle :: table}">
+                    </table>
+                </div>
+                <!--VIP-->
+                <div role="tabpanel" class="tab-pane fade" id="vip">
+                    <h1 class="page-header ">VIP</h1>
+                    <!-- 搜索框 -->
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="button" class="btn btn-default">搜索</button>
+                            <button type="button" class="btn btn-default">查看全部VIP</button>
+                        </div>
+                    </form>
+                    <table class="table table-striped table-hover table-bordered">
+                        <tr>
+                            <td class="text-center">
+                                用户编号
+                            </td>
+                            <td class="text-center">
+                                余额
+                            </td>
+                            <td class="text-center">
+                                操作
+                            </td>
+                        </tr>
+                        <tr th:each="vip:${vips}">
+                            <td th:text="${vip.userid}" class="text-center"></td>
+                            <td th:text="${vip.balance}" class="text-center"></td>
+                            <td class="text-center">
+                                    <a type="button" class="btn btn-primary">充值</a>
+                                    <a type="button" class="btn btn-danger">付款</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">...</div>
+
+
+</body>
+</html>
